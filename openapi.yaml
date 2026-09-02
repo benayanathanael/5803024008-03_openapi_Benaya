@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: Products API
+  version: 1.0.0
+  description: API untuk mengelola data products pada database Neon
+
+servers:
+  - url: https://your-api-url.vercel.app
+    description: Vercel (sesuaikan dengan URL deploy kamu)
+
+paths:
+  /products:
+    get:
+      summary: Get all products
+      operationId: getProducts
+      description: Mengambil semua produk dari database
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Daftar semua produk
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+    post:
+      summary: Create a new product
+      operationId: createProduct
+      description: Menambah produk baru ke database
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '201':
+          description: Produk berhasil dibuat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Input tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /products/{id}:
+    get:
+      summary: Get product by ID
+      operationId: getProductById
+      description: Mengambil satu produk berdasarkan ID
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID produk
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Produk ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: ID tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Produk tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Delete a product
+      operationId: deleteProduct
+      description: Menghapus satu produk berdasarkan ID
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID produk
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Produk berhasil dihapus
+        '400':
+          description: ID tidak valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Produk tidak ditemukan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Product:
+      type: object
+      description: Representasi satu produk dari database
+      properties:
+        id:
+          type: integer
+          description: ID unik produk, auto-generated oleh database
+          example: 1
+        name:
+          type: string
+          description: Nama produk
+          maxLength: 100
+          example: "Laptop"
+        price:
+          type: number
+          description: Harga produk
+          example: 8500000.00
+        stock:
+          type: integer
+          description: Jumlah stok produk
+          example: 10
+      required:
+        - id
+        - name
+        - price
+        - stock
+
+    ProductInput:
+      type: object
+      description: Schema untuk request body saat menambahkan produk baru
+      properties:
+        name:
+          type: string
+          description: Nama produk
+          maxLength: 100
+          example: "Monitor"
+        price:
+          type: number
+          description: Harga produk
+          example: 1500000.00
+        stock:
+          type: integer
+          description: Jumlah stok produk
+          example: 5
+      required:
+        - name
+        - price
+        - stock
+
+    Error:
+      type: object
+      description: Schema untuk response error
+      properties:
+        error:
+          type: string
+          description: Pesan error
+          example: "Product not found"
+      required:
+        - error
