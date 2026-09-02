@@ -5,8 +5,8 @@ info:
   description: API untuk mengelola data products pada database Neon
 
 servers:
-  - url: https://your-api-url.vercel.app
-    description: Vercel (sesuaikan dengan URL deploy kamu)
+  - url: 5803024008-03-openapi-benaya.vercel.app
+    description: Vercel
 
 paths:
   /products:
