@@ -1,8 +1,23 @@
 import os
 import psycopg
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SWAGGER_URL = "/docs"
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    "/openapi.yaml",
+    config={"app_name": "Products API"},
+)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+
+@app.get("/openapi.yaml")
+def openapi_spec():
+    return send_from_directory(PROJECT_ROOT, "openapi.yaml")
 
 
 def get_db_connection():
