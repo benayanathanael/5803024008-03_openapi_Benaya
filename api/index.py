@@ -27,8 +27,8 @@ def get_db_connection():
 
 @app.get("/")
 def home():
-    """Cek apakah server hidup."""
-    return jsonify({"status": "ok", "message": "Products API is running"})
+    """Menampilkan dokumentasi Swagger API."""
+    return app.view_functions["swagger_ui.show"]()
 
 
 @app.get("/products")
