@@ -2,40 +2,17 @@
 
 Tugas Web Service Lab 03: Contract-First API Design.
 
-## Struktur Project
+## Deskripsi
 
-```
-.
-├── openapi.yaml      # Kontrak API (OpenAPI 3.0.3)
-├── app.py            # Backend Flask
-├── requirements.txt  # Dependencies
-└── .env.example     # Template DATABASE_URL
-```
+API untuk mengelola data products menggunakan Flask, OpenAPI 3.0.3, dan PostgreSQL Neon.
 
-## Setup
+## Teknologi
 
-1. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. Buat file `.env`:
-   ```
-   copy .env.example .env
-   ```
-
-3. Isi `.env` dengan connection string Neon:
-   ```
-   DATABASE_URL=postgresql://user:pass@host/neondb?sslmode=require
-   ```
-
-## Jalankan Backend
-
-```
-python -m flask --app app --env-file .env run
-```
-
-Server berjalan di `http://localhost:5000`.
+- Python
+- Flask
+- psycopg (PostgreSQL driver)
+- PostgreSQL Neon
+- OpenAPI 3.0.3
 
 ## Endpoint
 
@@ -46,23 +23,34 @@ Server berjalan di `http://localhost:5000`.
 | POST   | /products             | Tambah produk baru  |
 | DELETE | /products/{id}        | Hapus produk        |
 
-## Test dengan curl
+## Menjalankan Project
 
-```bash
-# Ambil semua produk
-curl http://localhost:5000/products
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Ambil satu produk
-curl http://localhost:5000/products/1
+2. Buat file `.env`:
+   ```bash
+   copy .env.example .env
+   ```
 
-# Tambah produk baru
-curl -X POST http://localhost:5000/products \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Monitor","price":1500000,"stock":5}'
+3. Isi `.env` dengan connection string Neon.
 
-# Hapus produk
-curl -X DELETE http://localhost:5000/products/4
-```
+4. Jalankan Flask:
+   ```bash
+   python -m flask --app app --env-file .env run
+   ```
+
+Server berjalan di `http://localhost:5000`.
+
+## Environment
+
+`DATABASE_URL` disimpan di file `.env` dan tidak dimasukkan ke repository.
+
+## OpenAPI
+
+Spesifikasi API terdapat pada file `openapi.yaml`.
 
 ## Database
 
@@ -74,4 +62,3 @@ Menggunakan PostgreSQL Neon. Tabel `products` sudah tersedia dengan struktur:
 | name   | varchar(100) |
 | price  | numeric(12,2)|
 | stock  | integer      |
-# 5803024008-03_openapi_Benaya
