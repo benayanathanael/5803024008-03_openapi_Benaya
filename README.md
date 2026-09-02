@@ -74,3 +74,4 @@ Menggunakan PostgreSQL Neon. Tabel `products` sudah tersedia dengan struktur:
 | name   | varchar(100) |
 | price  | numeric(12,2)|
 | stock  | integer      |
+# 5803024008-03_openapi_Benaya
